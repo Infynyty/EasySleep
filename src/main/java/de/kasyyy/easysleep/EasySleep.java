@@ -1,15 +1,26 @@
 package de.kasyyy.easysleep;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerBedLeaveEvent;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPluginLoader;
+
+import java.io.File;
 
 public class EasySleep extends JavaPlugin implements Listener {
     private int playersInBed;
+
+    public EasySleep() {
+        super();
+    }
+
+    protected EasySleep(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
+        super(loader, description, dataFolder, file);
+    }
 
     @Override
     public void onEnable() {
@@ -26,7 +37,7 @@ public class EasySleep extends JavaPlugin implements Listener {
      * Adds a player to the playersInBed Integer
      * @return Returns true if the number of players in bed exceeds 50% of total players.
      */
-    private boolean addPlayer() {
+     boolean addPlayer() {
         playersInBed++;
         if(playersInBed >= (Bukkit.getOnlinePlayers().size()/2)) {
             playersInBed = 0;
@@ -46,7 +57,7 @@ public class EasySleep extends JavaPlugin implements Listener {
     /**
      * Removes a player from the playerInBed Integer
      */
-    private void removePlayer() {
+     void removePlayer() {
         playersInBed--;
         if(playersInBed == 1) {
             Bukkit.broadcastMessage(Util.prefix + playersInBed + " player is sleeping, at least "
