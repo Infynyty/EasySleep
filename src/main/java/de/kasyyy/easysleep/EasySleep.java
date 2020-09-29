@@ -61,38 +61,32 @@ public class EasySleep extends JavaPlugin implements Listener {
         playersInBed--;
         if(playersInBed == 1) {
             Bukkit.broadcastMessage(Util.prefix + playersInBed + " player is sleeping, at least "
-                    + Math.ceil((float) Bukkit.getOnlinePlayers().size()/2) + " need to be in bed!");
+                    + ((int)Math.ceil((float) Bukkit.getOnlinePlayers().size()/2)) + " need to be in bed!");
         } else {
             Bukkit.broadcastMessage(Util.prefix + playersInBed + " players are sleeping, at least "
-                    + Math.ceil((float) Bukkit.getOnlinePlayers().size()/2) + " need to be in bed!");
+                    + ((int)Math.ceil((float) Bukkit.getOnlinePlayers().size()/2)) + " need to be in bed!");
         }
     }
 
     //Checks if its night or if its raining and if so calls the addPlayer method
     @EventHandler
     public void onSleep(PlayerBedEnterEvent e)  {
-        if(e.getPlayer().getLocation().getWorld().getTime() > 13000) {
-            if(addPlayer()) {                              //TODO: Is this called every time?
+         if(e.getPlayer().getWorld().getTime() < 12541) return;
+            if(addPlayer()) { //TODO: Is this called every time?
+                if(e.getPlayer().getWorld().hasStorm()) {
+                    e.getPlayer().getLocation().getWorld().setStorm(false);
+                    Bukkit.broadcastMessage(Util.prefix  + "The sun is shining again!");
+                    return;
+                }
                 e.getPlayer().getLocation().getWorld().setTime(0);
                 Bukkit.broadcastMessage(Util.prefix  + "Good morning!");
             }
-        }
-        if(e.getPlayer().getWorld().hasStorm()) {
-            if(addPlayer()) {                              //TODO: Is this called every time?
-                e.getPlayer().getLocation().getWorld().setStorm(false);
-                Bukkit.broadcastMessage(Util.prefix  + "The sun is shining again!");
-            }
-        }
     }
 
     //Checks if its night or if its raining and if so calls the removePlayer method
     @EventHandler
     public void onLeaveBed(PlayerBedLeaveEvent e) {
-        if(e.getPlayer().getLocation().getWorld().getTime() > 13000) {
-            removePlayer();
-        }
-        if(e.getPlayer().getWorld().hasStorm()) {
-            removePlayer();
-        }
+        if(e.getPlayer().getWorld().getTime() < 12541) return;
+        removePlayer();
     }
 }
