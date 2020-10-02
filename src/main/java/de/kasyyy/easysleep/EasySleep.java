@@ -76,7 +76,6 @@ public class EasySleep extends JavaPlugin implements Listener {
                 if(e.getPlayer().getWorld().hasStorm()) {
                     e.getPlayer().getLocation().getWorld().setStorm(false);
                     Bukkit.broadcastMessage(Util.prefix  + "The sun is shining again!");
-                    return;
                 }
                 e.getPlayer().getLocation().getWorld().setTime(0);
                 Bukkit.broadcastMessage(Util.prefix  + "Good morning!");
