@@ -8,6 +8,14 @@
     <artifactId>EasySleep</artifactId>
     <version>0.0.1</version>
 
+    <profiles>
+        <profile>
+            <id>conf</id>
+            <build>
+                <directory>${dir}</directory>
+            </build>
+        </profile>
+    </profiles>
     <build>
         <finalName>${project.name}</finalName>
         <defaultGoal>clean package</defaultGoal>
